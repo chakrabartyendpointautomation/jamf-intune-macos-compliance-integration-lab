@@ -1,1 +1,73 @@
-
+{
+  "fixtureNotice": "Synthetic training data only. This is not a Jamf, Intune, or Microsoft Graph schema or export.",
+  "schemaVersion": 1,
+  "freshnessThresholdHours": 24,
+  "scenarios": [
+    {
+      "scenarioId": "healthy-registered-pilot",
+      "description": "Pilot Mac meets configured Jamf criteria, has fresh inventory, and is registered.",
+      "jamfCompliance": "compliant",
+      "inventoryAgeHours": 3,
+      "entraRegistered": true,
+      "partnerStatus": "active",
+      "partnerAssignmentInScope": true,
+      "expectedDisposition": "compliant",
+      "expectedAccessWithCompliantRequirement": "eligible-after-policy-evaluation"
+    },
+    {
+      "scenarioId": "approved-control-fails",
+      "description": "Registered pilot Mac deliberately misses an approved Jamf control such as FileVault encryption.",
+      "jamfCompliance": "noncompliant",
+      "inventoryAgeHours": 5,
+      "entraRegistered": true,
+      "partnerStatus": "active",
+      "partnerAssignmentInScope": true,
+      "expectedDisposition": "noncompliant",
+      "expectedAccessWithCompliantRequirement": "does-not-satisfy-device-requirement"
+    },
+    {
+      "scenarioId": "stale-inventory",
+      "description": "Jamf inventory is older than the fixture freshness threshold.",
+      "jamfCompliance": "compliant",
+      "inventoryAgeHours": 72,
+      "entraRegistered": true,
+      "partnerStatus": "active",
+      "partnerAssignmentInScope": true,
+      "expectedDisposition": "unknown",
+      "expectedAccessWithCompliantRequirement": "investigate-before-decision"
+    },
+    {
+      "scenarioId": "not-registered",
+      "description": "Jamf inventory exists but Entra registration is missing.",
+      "jamfCompliance": "compliant",
+      "inventoryAgeHours": 4,
+      "entraRegistered": false,
+      "partnerStatus": "active",
+      "partnerAssignmentInScope": true,
+      "expectedDisposition": "unknown",
+      "expectedAccessWithCompliantRequirement": "registration-incomplete"
+    },
+    {
+      "scenarioId": "partner-inactive",
+      "description": "Jamf source appears healthy but the Intune partner is inactive.",
+      "jamfCompliance": "compliant",
+      "inventoryAgeHours": 2,
+      "entraRegistered": true,
+      "partnerStatus": "inactive",
+      "partnerAssignmentInScope": true,
+      "expectedDisposition": "unknown",
+      "expectedAccessWithCompliantRequirement": "investigate-before-decision"
+    },
+    {
+      "scenarioId": "assignment-out-of-scope",
+      "description": "The device user is not in the intended Intune partner assignment group.",
+      "jamfCompliance": "compliant",
+      "inventoryAgeHours": 2,
+      "entraRegistered": true,
+      "partnerStatus": "active",
+      "partnerAssignmentInScope": false,
+      "expectedDisposition": "unknown",
+      "expectedAccessWithCompliantRequirement": "outside-integration-scope"
+    }
+  ]
+}
