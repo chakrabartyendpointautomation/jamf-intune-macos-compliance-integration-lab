@@ -21,11 +21,11 @@ This repository follows the current **Device Compliance** path. Jamf's earlier m
 - [Conditional Access rollout and rollback](docs/conditional-access-staging.md)
 - [Troubleshooting guide](docs/troubleshooting.md)
 - [Synthetic compliance scenarios](samples/device-compliance-scenarios.json)
-- [Offline fixture validator](scripts/Test-LabScenarios.ps1)
+- [Offline scenario viewer](scripts/Show-ComplianceScenarios.ps1)
 
 ## Prerequisites for a real lab tenant
 
-The fixture validator only needs PowerShell 7.2+ and the local JSON file. To exercise the vendor workflow in a dedicated test tenant, confirm current licensing, product versions, account roles, network endpoints, and supported macOS versions with the vendor documentation. The integration requires Jamf Pro, Intune, Microsoft Entra ID, and Company Portal registration. Keep Jamf as the sole MDM authority for these devices; this integration reports compliance and does not transfer macOS MDM ownership to Intune.
+The offline scenario viewer needs PowerShell 7.2+ and the local JSON fixture. To exercise the vendor workflow in a dedicated test tenant, confirm current licensing, product versions, account roles, network endpoints, and supported macOS versions with the vendor documentation. The integration requires Jamf Pro, Intune, Microsoft Entra ID, and Company Portal registration. Keep Jamf as the sole MDM authority for these devices; this integration reports compliance and does not transfer macOS MDM ownership to Intune.
 
 The Microsoft guide describes Jamf computer smart groups for applicable and compliant devices, a Jamf policy that registers computers with Entra ID, the Jamf Device Compliance connector, and a scoped Intune partner compliance assignment. It also calls out an exclusion for the Device Compliance User Registration app in policies that would otherwise block registration. Follow the current guide and your organization's change process for exact console settings.
 
@@ -33,9 +33,9 @@ The Microsoft guide describes Jamf computer smart groups for applicable and comp
 
 From the repository root:
 
-    pwsh -NoProfile -File ./scripts/Test-LabScenarios.ps1 -Path ./samples/device-compliance-scenarios.json
+    pwsh -NoProfile -File ./scripts/Show-ComplianceScenarios.ps1
 
-The script validates fixture shape and enumerated states only. It makes no network calls, authenticates nowhere, and does not determine actual Jamf, Intune, or Entra compliance.
+The fixture is an independent teaching model, not a Jamf, Intune, or Microsoft Graph schema/export. The script reads local JSON and displays each expected disposition. It makes no network calls, authenticates nowhere, and does not determine actual device compliance.
 
 ## Safety boundaries
 
@@ -48,7 +48,7 @@ The script validates fixture shape and enumerated states only. It makes no netwo
 
 ## Validation status
 
-No Jamf Pro or Intune tenant was connected for this project. The sample scenarios are synthetic, and the validator has not been run. Follow the vendor steps in a dedicated lab tenant and record what was actually verified before describing an implementation as tested.
+No Jamf Pro or Intune tenant was connected for this project. The sample scenarios are synthetic, and the offline viewer has not been run. Follow the vendor steps in a dedicated lab tenant and record what was actually verified before describing an implementation as tested.
 
 ## References
 
